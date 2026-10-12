@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7931a">
-  <meta name="description" content="BITCOIN HALVING - WALLET: una wallet de Bitcoin pensada para reunir tus direcciones BTC y monitorizar las recompensas de tus máquinas ASIC.">
+  <meta name="description" content="BITCOIN HALVING - WALLET: wallet Bitcoin, direcciones BTC y seguimiento de recompensas de minería ASIC.">
 
   <title>BITCOIN HALVING - WALLET</title>
+
+  <link rel="icon" type="image/png" href="./LOGO_BTC_wallet.png">
+  <link rel="apple-touch-icon" href="./LOGO_BTC_wallet.png">
 
   <style>
     :root {
@@ -43,6 +46,10 @@
       font: inherit;
     }
 
+    img {
+      max-width: 100%;
+    }
+
     .container {
       max-width: 1250px;
       padding: 0 6%;
@@ -59,7 +66,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 25px;
-      min-height: 92px;
+      min-height: 96px;
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
 
     .brand {
@@ -68,19 +77,13 @@
       gap: 12px;
     }
 
-    .bitcoin-logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 48px;
-      height: 48px;
+    .brand-logo {
+      display: block;
+      width: 58px;
+      height: 58px;
       flex-shrink: 0;
-      border-radius: 50%;
-      background: var(--btc);
-      color: white;
-      font-size: 35px;
-      font-weight: bold;
-      transform: rotate(12deg);
+      object-fit: contain;
+      border-radius: 12px;
     }
 
     .brand strong {
@@ -154,7 +157,7 @@
       grid-template-columns: 1.1fr 1fr;
       align-items: center;
       gap: 65px;
-      padding: 95px 0 80px;
+      padding: 75px 0 55px;
     }
 
     .eyebrow {
@@ -212,7 +215,6 @@
     }
 
     .wallet-preview {
-      position: relative;
       padding: 28px;
       border: 1px solid #414141;
       border-radius: 22px;
@@ -225,7 +227,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 15px;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
     .preview-title {
@@ -236,10 +238,12 @@
       font-weight: bold;
     }
 
-    .preview-title .bitcoin-logo {
-      width: 32px;
-      height: 32px;
-      font-size: 24px;
+    .preview-logo {
+      display: block;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 9px;
     }
 
     .demo-label {
@@ -249,6 +253,7 @@
       color: #ccc;
       font-size: 9px;
       letter-spacing: 1px;
+      text-align: center;
     }
 
     .balance-label {
@@ -343,6 +348,20 @@
       color: #888;
       font-size: 10px;
       line-height: 1.6;
+    }
+
+    .banner {
+      margin: 0 0 40px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .banner img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     .strip {
@@ -492,32 +511,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 25px;
-      min-height: 270px;
+      min-height: 300px;
+      padding: 35px;
       border: 1px solid var(--border);
       border-radius: 15px;
       background: #191919;
     }
 
-    .coin {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 130px;
-      height: 130px;
-      border: 7px solid #ffb557;
-      border-radius: 50%;
-      background: var(--btc);
-      color: white;
-      font-size: 88px;
-      font-weight: bold;
-      transform: rotate(12deg);
-    }
-
-    .half-symbol {
-      color: white;
-      font-size: 42px;
-      font-weight: bold;
+    .halving-art img {
+      display: block;
+      width: 230px;
+      height: auto;
+      border-radius: 20px;
     }
 
     .halving p {
@@ -601,6 +606,11 @@
       padding: 40px 0;
     }
 
+    footer .brand-logo {
+      width: 46px;
+      height: 46px;
+    }
+
     footer p {
       max-width: 380px;
       margin: 0;
@@ -673,7 +683,7 @@
       }
 
       .hero {
-        padding: 55px 0;
+        padding: 50px 0;
         gap: 40px;
       }
 
@@ -713,7 +723,11 @@
       }
 
       .halving-art {
-        min-height: 230px;
+        min-height: 250px;
+      }
+
+      .halving-art img {
+        width: 190px;
       }
 
       .closing {
@@ -736,6 +750,10 @@
     }
 
     @media (max-width: 400px) {
+      .brand {
+        gap: 9px;
+      }
+
       .brand strong {
         font-size: 13px;
       }
@@ -744,10 +762,9 @@
         font-size: 10px;
       }
 
-      .bitcoin-logo {
-        width: 40px;
-        height: 40px;
-        font-size: 29px;
+      .brand-logo {
+        width: 46px;
+        height: 46px;
       }
 
       .balance {
@@ -776,7 +793,14 @@
   <header>
     <div class="container header-inner">
       <a class="brand" href="#inicio" aria-label="Bitcoin Halving Wallet, inicio">
-        <span class="bitcoin-logo" aria-hidden="true">₿</span>
+        <img
+          class="brand-logo"
+          src="./LOGO_BTC_wallet.png"
+          alt="Logo de Bitcoin Halving Wallet"
+          width="58"
+          height="58"
+        >
+
         <div>
           <strong>BITCOIN HALVING</strong>
           <small>WALLET</small>
@@ -823,6 +847,7 @@
           <a class="button" href="#wallet">
             Descubre la wallet ↗
           </a>
+
           <a class="button secondary" href="#mineria">
             Explora la minería
           </a>
@@ -836,9 +861,16 @@
       <div class="wallet-preview">
         <div class="preview-top">
           <div class="preview-title">
-            <span class="bitcoin-logo" aria-hidden="true">₿</span>
+            <img
+              class="preview-logo"
+              src="./LOGO_BTC_wallet.png"
+              alt=""
+              width="40"
+              height="40"
+            >
             Bitcoin Wallet
           </div>
+
           <span class="demo-label">VISTA ILUSTRATIVA</span>
         </div>
 
@@ -883,15 +915,25 @@
       </div>
     </section>
 
+    <div class="banner">
+      <img
+        src="./LOGO_BTC_wallet1.png"
+        alt="Banner de BITCOIN HALVING - WALLET"
+        fetchpriority="high"
+      >
+    </div>
+
     <div class="strip">
       <div class="strip-item">
         <b aria-hidden="true">₿</b>
         Una wallet centrada en Bitcoin
       </div>
+
       <div class="strip-item">
         <b aria-hidden="true">↙</b>
         Tus direcciones de recepción
       </div>
+
       <div class="strip-item">
         <b aria-hidden="true">↗</b>
         Seguimiento de recompensas ASIC
@@ -905,6 +947,7 @@
             <span class="dot"></span>
             Tu espacio Bitcoin
           </div>
+
           <h2>
             Una wallet para BTC.<br>
             <span>Una visión más clara.</span>
@@ -1011,9 +1054,12 @@
     </section>
 
     <section class="halving" id="halving">
-      <div class="halving-art" aria-hidden="true">
-        <div class="coin">₿</div>
-        <div class="half-symbol">½</div>
+      <div class="halving-art">
+        <img
+          src="./LOGO_BTC_wallet.png"
+          alt="Bitcoin Halving Wallet"
+          loading="lazy"
+        >
       </div>
 
       <div>
@@ -1121,6 +1167,7 @@
           Tu próximo bloque.<br>
           Tu siguiente paso.
         </h2>
+
         <p>
           BITCOIN HALVING - WALLET.<br>
           Wallet BTC y seguimiento de minería ASIC.
@@ -1134,7 +1181,15 @@
 
     <footer>
       <a class="brand" href="#inicio">
-        <span class="bitcoin-logo" aria-hidden="true">₿</span>
+        <img
+          class="brand-logo"
+          src="./LOGO_BTC_wallet.png"
+          alt=""
+          width="46"
+          height="46"
+          loading="lazy"
+        >
+
         <div>
           <strong>BITCOIN HALVING</strong>
           <small>WALLET</small>
