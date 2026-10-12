@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7931a">
+  <meta name="description" content="BITCOIN HALVING - WALLET: una wallet de Bitcoin pensada para reunir tus direcciones BTC y monitorizar las recompensas de tus máquinas ASIC.">
+
+  <title>BITCOIN HALVING - WALLET</title>
+
+  <style>
+    :root {
+      --btc: #f7931a;
+      --bg: #101010;
+      --panel: #191919;
+      --white: #ffffff;
+      --gray: #adadad;
+      --border: #303030;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      max-width: 1250px;
+      padding: 0 6%;
+      margin: auto;
+    }
+
+    header {
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      min-height: 92px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bitcoin-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--btc);
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      transform: rotate(12deg);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 5px;
+      color: var(--btc);
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      color: var(--btc);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 16px 22px;
+      border: 1px solid var(--btc);
+      border-radius: 7px;
+      background: var(--btc);
+      color: #111;
+      font-size: 13px;
+      font-weight: bold;
+      transition: transform .2s, background .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: #ffab42;
+      color: #111;
+    }
+
+    .button.secondary {
+      border-color: #454545;
+      background: transparent;
+      color: white;
+    }
+
+    .button.secondary:hover {
+      background: #252525;
+    }
+
+    .menu-button {
+      display: none;
+      padding: 9px 12px;
+      border: 1px solid #454545;
+      border-radius: 5px;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 65px;
+      padding: 95px 0 80px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--btc);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--btc);
+    }
+
+    h1 {
+      margin: 25px 0;
+      font-size: clamp(46px, 5.6vw, 76px);
+      line-height: 1.03;
+      letter-spacing: -3px;
+    }
+
+    h1 span,
+    h2 span {
+      color: var(--btc);
+    }
+
+    p {
+      color: var(--gray);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero p {
+      max-width: 480px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 30px;
+    }
+
+    .hero-note {
+      margin-top: 22px;
+      color: #888;
+      font-size: 12px;
+    }
+
+    .wallet-preview {
+      position: relative;
+      padding: 28px;
+      border: 1px solid #414141;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #262626, #171717);
+      box-shadow: 0 25px 70px #00000055;
+    }
+
+    .preview-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .preview-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .preview-title .bitcoin-logo {
+      width: 32px;
+      height: 32px;
+      font-size: 24px;
+    }
+
+    .demo-label {
+      padding: 6px 9px;
+      border: 1px solid #555;
+      border-radius: 20px;
+      color: #ccc;
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    .balance-label {
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .balance {
+      margin: 12px 0;
+      font-size: 39px;
+      font-weight: bold;
+      letter-spacing: -1px;
+    }
+
+    .balance span {
+      color: var(--btc);
+      font-size: 21px;
+    }
+
+    .preview-description {
+      margin-bottom: 25px;
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .preview-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .preview-action {
+      padding: 13px;
+      border: 1px solid #414141;
+      border-radius: 7px;
+      text-align: center;
+      color: #eee;
+      font-size: 12px;
+    }
+
+    .preview-action:first-child {
+      border-color: var(--btc);
+      background: var(--btc);
+      color: #111;
+    }
+
+    .mining-card {
+      margin-top: 25px;
+      padding: 20px;
+      border: 1px solid #3b3b3b;
+      border-radius: 12px;
+      background: #121212;
+    }
+
+    .mining-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    .mining-title span {
+      color: var(--btc);
+    }
+
+    .mining-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 0;
+      font-size: 12px;
+    }
+
+    .mining-row + .mining-row {
+      border-top: 1px solid #292929;
+    }
+
+    .mining-row span {
+      color: #999;
+    }
+
+    .mining-row strong {
+      text-align: right;
+      font-weight: normal;
+    }
+
+    .preview-footnote {
+      margin: 17px 0 0;
+      color: #888;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .strip-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 13px;
+    }
+
+    .strip-item b {
+      color: var(--btc);
+      font-size: 23px;
+    }
+
+    section {
+      padding: 85px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 50px;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin: 17px 0 0;
+      font-size: clamp(32px, 3.6vw, 47px);
+      line-height: 1.12;
+      letter-spacing: -1.7px;
+    }
+
+    .section-heading p {
+      max-width: 370px;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      background: #f7931a18;
+      color: var(--btc);
+      font-size: 27px;
+    }
+
+    h3 {
+      font-size: 21px;
+      letter-spacing: -.5px;
+    }
+
+    .feature p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .mining-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 70px;
+      padding: 65px 6%;
+      border: 1px solid #414141;
+      border-radius: 15px;
+      background: #191919;
+    }
+
+    .mining-section p {
+      font-size: 15px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 14px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid #3a3a3a;
+      border-radius: 9px;
+      background: #121212;
+    }
+
+    .step-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--btc);
+      color: #111;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .flow-step strong {
+      font-size: 14px;
+    }
+
+    .flow-step p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .halving {
+      display: grid;
+      grid-template-columns: .8fr 1fr;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .halving-art {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      min-height: 270px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #191919;
+    }
+
+    .coin {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 130px;
+      height: 130px;
+      border: 7px solid #ffb557;
+      border-radius: 50%;
+      background: var(--btc);
+      color: white;
+      font-size: 88px;
+      font-weight: bold;
+      transform: rotate(12deg);
+    }
+
+    .half-symbol {
+      color: white;
+      font-size: 42px;
+      font-weight: bold;
+    }
+
+    .halving p {
+      font-size: 15px;
+    }
+
+    .faq {
+      display: grid;
+      grid-template-columns: .7fr 1fr;
+      gap: 70px;
+      border-top: 1px solid var(--border);
+    }
+
+    details {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      list-style: none;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      color: var(--btc);
+      font-size: 22px;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    details p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .closing {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 35px;
+      padding: 55px 6%;
+      border-radius: 15px;
+      background: var(--btc);
+      color: #111;
+    }
+
+    .closing h2 {
+      margin: 0;
+      font-size: 40px;
+    }
+
+    .closing p {
+      margin-bottom: 0;
+      color: #34200b;
+    }
+
+    .closing .button {
+      flex-shrink: 0;
+      border-color: #111;
+      background: #111;
+      color: white;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    footer p {
+      max-width: 380px;
+      margin: 0;
+      font-size: 11px;
+    }
+
+    .back-top {
+      color: var(--btc);
+      font-size: 12px;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--btc);
+      outline-offset: 5px;
+    }
+
+    @media (max-width: 950px) {
+      nav {
+        gap: 16px;
+      }
+
+      .hero {
+        gap: 35px;
+      }
+
+      .balance {
+        font-size: 32px;
+      }
+
+      .wallet-preview {
+        padding: 22px;
+      }
+
+      .mining-section,
+      .halving,
+      .faq {
+        gap: 35px;
+      }
+    }
+
+    @media (max-width: 750px) {
+      .menu-button {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        flex-direction: column;
+        padding: 25px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      .hero,
+      .mining-section,
+      .halving,
+      .faq {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 55px 0;
+        gap: 40px;
+      }
+
+      h1 {
+        font-size: clamp(46px, 9vw, 65px);
+        letter-spacing: -2px;
+      }
+
+      .strip {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        max-width: none;
+        margin-top: 25px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-icon {
+        margin-bottom: 20px;
+      }
+
+      .mining-section {
+        padding: 35px 7%;
+      }
+
+      .halving-art {
+        min-height: 230px;
+      }
+
+      .closing {
+        display: block;
+        padding: 35px 7%;
+      }
+
+      .closing h2 {
+        font-size: 34px;
+      }
+
+      .closing .button {
+        margin-top: 25px;
+      }
+
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .brand strong {
+        font-size: 13px;
+      }
+
+      .brand small {
+        font-size: 10px;
+      }
+
+      .bitcoin-logo {
+        width: 40px;
+        height: 40px;
+        font-size: 29px;
+      }
+
+      .balance {
+        font-size: 29px;
+      }
+
+      .eyebrow {
+        font-size: 9px;
+        letter-spacing: 1.3px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Bitcoin Halving Wallet, inicio">
+        <span class="bitcoin-logo" aria-hidden="true">₿</span>
+        <div>
+          <strong>BITCOIN HALVING</strong>
+          <small>WALLET</small>
+        </div>
+      </a>
+
+      <button
+        class="menu-button"
+        aria-label="Abrir menú"
+        aria-controls="navigation"
+        aria-expanded="false"
+      >☰</button>
+
+      <nav id="navigation">
+        <a href="#wallet">Wallet BTC</a>
+        <a href="#mineria">Minería ASIC</a>
+        <a href="#halving">Halving</a>
+        <a class="button" href="#app">Conoce la app ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="inicio">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Bitcoin · Wallet · Minería
+        </div>
+
+        <h1>
+          Tus Bitcoin.<br>
+          Tus máquinas.<br>
+          <span>Un mismo lugar.</span>
+        </h1>
+
+        <p>
+          BITCOIN HALVING - WALLET es una app pensada para
+          reunir tu wallet BTC, tus direcciones y el seguimiento
+          de las recompensas de tus máquinas ASIC.
+        </p>
+
+        <div class="actions">
+          <a class="button" href="#wallet">
+            Descubre la wallet ↗
+          </a>
+          <a class="button secondary" href="#mineria">
+            Explora la minería
+          </a>
+        </div>
+
+        <div class="hero-note">
+          Del trabajo de tus ASIC a tu dirección Bitcoin.
+        </div>
+      </div>
+
+      <div class="wallet-preview">
+        <div class="preview-top">
+          <div class="preview-title">
+            <span class="bitcoin-logo" aria-hidden="true">₿</span>
+            Bitcoin Wallet
+          </div>
+          <span class="demo-label">VISTA ILUSTRATIVA</span>
+        </div>
+
+        <div class="balance-label">Tu saldo Bitcoin</div>
+        <div class="balance">0.00000000 <span>BTC</span></div>
+
+        <div class="preview-description">
+          Wallet y direcciones de recepción en un mismo espacio.
+        </div>
+
+        <div class="preview-actions" aria-hidden="true">
+          <div class="preview-action">↙ Recibir BTC</div>
+          <div class="preview-action">↗ Enviar BTC</div>
+        </div>
+
+        <div class="mining-card">
+          <div class="mining-title">
+            <strong>Monitor de minería</strong>
+            <span>ASIC</span>
+          </div>
+
+          <div class="mining-row">
+            <span>Máquinas</span>
+            <strong>Sin configurar</strong>
+          </div>
+
+          <div class="mining-row">
+            <span>Dirección de recompensas</span>
+            <strong>Pendiente de añadir</strong>
+          </div>
+
+          <div class="mining-row">
+            <span>Recompensas recibidas</span>
+            <strong>0.00000000 BTC</strong>
+          </div>
+        </div>
+
+        <p class="preview-footnote">
+          Ejemplo visual de la app. Esta página no se conecta
+          a una wallet ni a máquinas de minería.
+        </p>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="strip-item">
+        <b aria-hidden="true">₿</b>
+        Una wallet centrada en Bitcoin
+      </div>
+      <div class="strip-item">
+        <b aria-hidden="true">↙</b>
+        Tus direcciones de recepción
+      </div>
+      <div class="strip-item">
+        <b aria-hidden="true">↗</b>
+        Seguimiento de recompensas ASIC
+      </div>
+    </div>
+
+    <section id="wallet">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Tu espacio Bitcoin
+          </div>
+          <h2>
+            Una wallet para BTC.<br>
+            <span>Una visión más clara.</span>
+          </h2>
+        </div>
+
+        <p>
+          La propuesta reúne tus Bitcoin y las direcciones que
+          utilizas para recibir pagos, con un espacio dedicado
+          al seguimiento de tu minería.
+        </p>
+      </div>
+
+      <div class="features">
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">₿</div>
+          <h3>Wallet Bitcoin</h3>
+          <p>
+            Un espacio pensado para consultar tu saldo,
+            enviar Bitcoin y recibir BTC en tus direcciones.
+          </p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">↙</div>
+          <h3>Tus direcciones</h3>
+          <p>
+            Añade las direcciones BTC que quieres seguir y
+            distingue la que utilizas para recibir las
+            recompensas de minería.
+          </p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">↗</div>
+          <h3>Recompensas de minería</h3>
+          <p>
+            La app está pensada para ayudarte a consultar
+            los pagos de minería y los BTC recibidos,
+            junto a la información de tus ASIC.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mining-section" id="mineria">
+      <div>
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Para tus máquinas ASIC
+        </div>
+
+        <h2>
+          Tus máquinas trabajan.<br>
+          <span>Tú sigues sus recompensas.</span>
+        </h2>
+
+        <p>
+          Conecta tus ASIC mediante las integraciones compatibles
+          y relaciona tu actividad de minería con la dirección
+          Bitcoin donde recibes los pagos.
+        </p>
+
+        <p>
+          El seguimiento dependerá de la información disponible
+          en tus máquinas y en el pool que utilices.
+        </p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step">
+          <span class="step-number">01</span>
+          <div>
+            <strong>Añade tu dirección BTC</strong>
+            <p>
+              Identifica la dirección donde quieres consultar
+              las recompensas recibidas.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <span class="step-number">02</span>
+          <div>
+            <strong>Configura tus ASIC</strong>
+            <p>
+              Vincula la información de tus máquinas o de tu
+              pool mediante las integraciones disponibles.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <span class="step-number">03</span>
+          <div>
+            <strong>Monitoriza los pagos</strong>
+            <p>
+              Consulta las recompensas registradas y los BTC
+              que llegan a tu dirección.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="halving" id="halving">
+      <div class="halving-art" aria-hidden="true">
+        <div class="coin">₿</div>
+        <div class="half-symbol">½</div>
+      </div>
+
+      <div>
+        <div class="eyebrow">
+          <span class="dot"></span>
+          La esencia de Bitcoin
+        </div>
+
+        <h2>
+          Bitcoin evoluciona.<br>
+          <span>Tu seguimiento también.</span>
+        </h2>
+
+        <p>
+          El halving reduce a la mitad el subsidio de Bitcoin
+          por bloque. Es parte del funcionamiento de la red
+          y del contexto en el que trabajan los mineros.
+        </p>
+
+        <p>
+          BITCOIN HALVING - WALLET nace con una idea:
+          acercar tu wallet y tu actividad de minería para
+          que puedas consultar tus recompensas desde un
+          mismo lugar.
+        </p>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div>
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Preguntas frecuentes
+        </div>
+
+        <h2>
+          Tu wallet.<br>
+          Tu minería.<br>
+          <span>Más claridad.</span>
+        </h2>
+      </div>
+
+      <div>
+        <details>
+          <summary>¿Qué es BITCOIN HALVING - WALLET?</summary>
+          <p>
+            Es una app planteada como wallet de Bitcoin,
+            con funciones para añadir direcciones BTC
+            y monitorizar las recompensas de máquinas ASIC.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Añadir una dirección permite gastar sus BTC?</summary>
+          <p>
+            No. Una dirección pública permite consultar
+            la información pública asociada a ella.
+            Para gastar sus Bitcoin necesitas las claves
+            correspondientes.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿La app mina Bitcoin desde el móvil?</summary>
+          <p>
+            La minería la realizan tus máquinas ASIC.
+            La app está pensada para gestionar tu wallet
+            y consultar la información de minería y sus pagos.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Cómo llegan las recompensas a mi wallet?</summary>
+          <p>
+            En minería mediante un pool, debes configurar
+            allí tu dirección de pago BTC. El pool envía
+            los pagos según sus condiciones y umbrales.
+            Añadir esa dirección a la app permite seguir
+            los BTC recibidos.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Qué máquinas y pools serán compatibles?</summary>
+          <p>
+            La compatibilidad se indicará con las integraciones
+            disponibles en la app. No todos los ASIC y pools
+            ofrecen las mismas opciones de conexión.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Dónde puedo descargarla?</summary>
+          <p>
+            El enlace oficial de descarga se añadirá a esta
+            página cuando esté disponible.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <section class="closing" id="app">
+      <div>
+        <h2>
+          Tu próximo bloque.<br>
+          Tu siguiente paso.
+        </h2>
+        <p>
+          BITCOIN HALVING - WALLET.<br>
+          Wallet BTC y seguimiento de minería ASIC.
+        </p>
+      </div>
+
+      <a class="button" href="#mineria">
+        Descubre la propuesta ↗
+      </a>
+    </section>
+
+    <footer>
+      <a class="brand" href="#inicio">
+        <span class="bitcoin-logo" aria-hidden="true">₿</span>
+        <div>
+          <strong>BITCOIN HALVING</strong>
+          <small>WALLET</small>
+        </div>
+      </a>
+
+      <p>
+        Wallet Bitcoin y monitorización de recompensas de minería.
+        Página de presentación de la app.
+      </p>
+
+      <a class="back-top" href="#inicio">Volver arriba ↑</a>
+    </footer>
+  </main>
+
+  <script>
+    const menuButton = document.querySelector(".menu-button");
+    const navigation = document.querySelector("#navigation");
+
+    function closeMenu() {
+      navigation.classList.remove("open");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Abrir menú");
+    }
+
+    menuButton.addEventListener("click", () => {
+      const open = navigation.classList.toggle("open");
+
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute(
+        "aria-label",
+        open ? "Cerrar menú" : "Abrir menú"
+      );
+    });
+
+    navigation.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    });
+  </script>
+</body>
+</html>
