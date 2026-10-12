@@ -1235,5 +1235,235 @@
       }
     });
   </script>
+
+<style>
+  .social-share {
+    margin: 35px auto;
+    padding: 30px 6%;
+    max-width: 1250px;
+    text-align: center;
+  }
+
+  .social-share h2 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+
+  .social-share p {
+    color: #adadad;
+    font-size: 14px;
+  }
+
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .social-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 145px;
+    padding: 14px 20px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #fff;
+    font: bold 14px Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .2s;
+  }
+
+  .social-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .share-x {
+    background: #000;
+  }
+
+  .share-facebook {
+    background: #1877f2;
+    border-color: #1877f2;
+  }
+
+  .share-instagram {
+    background: linear-gradient(45deg, #f7931a, #e1306c, #833ab4);
+    border-color: transparent;
+  }
+
+  .share-copy {
+    background: #f7931a;
+    border-color: #f7931a;
+    color: #111;
+  }
+
+  .social-symbol {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  #share-status {
+    min-height: 24px;
+    margin-top: 16px;
+    color: #f7931a;
+    font-size: 13px;
+  }
+
+  .social-button:focus-visible {
+    outline: 3px solid #f7931a;
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-button {
+      transition: none;
+    }
+  }
+</style>
+
+<section class="social-share" aria-labelledby="share-heading">
+  <h2 id="share-heading">Comparte BITCOIN HALVING - WALLET</h2>
+  <p>Comparte la web con tu comunidad Bitcoin.</p>
+
+  <div class="social-buttons">
+    <a
+      id="share-x"
+      class="social-button share-x"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="social-symbol" aria-hidden="true">𝕏</span>
+      Compartir en X
+    </a>
+
+    <a
+      id="share-facebook"
+      class="social-button share-facebook"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="social-symbol" aria-hidden="true">f</span>
+      Facebook
+    </a>
+
+    <button
+      id="share-instagram"
+      class="social-button share-instagram"
+      type="button"
+    >
+      <span class="social-symbol" aria-hidden="true">◎</span>
+      Instagram
+    </button>
+
+    <button
+      id="share-copy"
+      class="social-button share-copy"
+      type="button"
+    >
+      <span class="social-symbol" aria-hidden="true">↗</span>
+      Copiar enlace
+    </button>
+  </div>
+
+  <p id="share-status" role="status" aria-live="polite"></p>
+</section>
+
+<script>
+  (() => {
+    const pageUrl = new URL(window.location.href);
+    pageUrl.hash = "";
+
+    const shareUrl = pageUrl.href;
+    const shareText =
+      "Conoce BITCOIN HALVING - WALLET: wallet BTC y seguimiento " +
+      "de recompensas de minería ASIC. #Bitcoin #BTC #Minería";
+
+    const status = document.getElementById("share-status");
+
+    document.getElementById("share-x").href =
+      "https://twitter.com/intent/tweet?text=" +
+      encodeURIComponent(shareText) +
+      "&url=" +
+      encodeURIComponent(shareUrl);
+
+    document.getElementById("share-facebook").href =
+      "https://www.facebook.com/sharer/sharer.php?u=" +
+      encodeURIComponent(shareUrl);
+
+    async function copyLink() {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          return;
+        } catch {
+          // Intenta el método alternativo.
+        }
+      }
+
+      const field = document.createElement("textarea");
+      field.value = shareUrl;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+
+      document.body.appendChild(field);
+      field.select();
+
+      let copied = false;
+
+      try {
+        copied = document.execCommand("copy");
+      } finally {
+        field.remove();
+      }
+
+      if (!copied) {
+        throw new Error("No se pudo copiar el enlace.");
+      }
+    }
+
+    document.getElementById("share-copy").addEventListener(
+      "click",
+      async () => {
+        try {
+          await copyLink();
+          status.textContent = "Enlace copiado. Ya puedes compartirlo.";
+        } catch {
+          status.textContent =
+            "Copia el enlace desde la barra de direcciones del navegador.";
+        }
+      }
+    );
+
+    document.getElementById("share-instagram").addEventListener(
+      "click",
+      async () => {
+        window.open(
+          "https://www.instagram.com/",
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+        try {
+          await copyLink();
+          status.textContent =
+            "Enlace copiado. Pégalo en un mensaje, en tu biografía " +
+            "o en el sticker de enlace de una historia de Instagram.";
+        } catch {
+          status.textContent =
+            "Copia la dirección de esta web y compártela en Instagram.";
+        }
+      }
+    );
+  })();
+</script>
+  
 </body>
 </html>
